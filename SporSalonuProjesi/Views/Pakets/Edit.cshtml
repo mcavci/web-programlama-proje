@@ -1,0 +1,107 @@
+﻿@model SporSalonuProjesi.Models.Paket
+
+@{
+    ViewData["Title"] = "Paket Düzenle";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-warning">
+                <div class="card-header bg-warning text-dark">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-edit me-2"></i> Paket Bilgilerini Güncelle
+                    </h3>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <input type="hidden" asp-for="PaketId" />
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5 class="text-warning text-dark border-bottom pb-2 mb-3">Temel Bilgiler</h5>
+
+                                <div class="mb-3">
+                                    <label asp-for="PaketAdi" class="form-label fw-bold">Paket Adı</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="fas fa-tag text-warning"></i></span>
+                                        <input asp-for="PaketAdi" class="form-control" />
+                                    </div>
+                                    <span asp-validation-for="PaketAdi" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label asp-for="Fiyat" class="form-label fw-bold">Fiyat (₺)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="fas fa-lira-sign text-warning"></i></span>
+                                        <input asp-for="Fiyat" class="form-control" />
+                                    </div>
+                                    <span asp-validation-for="Fiyat" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label asp-for="SureAy" class="form-label fw-bold">Süre (Ay)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="far fa-calendar-alt text-warning"></i></span>
+                                        <input asp-for="SureAy" class="form-control" />
+                                    </div>
+                                    <span asp-validation-for="SureAy" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 ps-md-4">
+                                <h5 class="text-warning text-dark border-bottom pb-2 mb-3">Limitler ve Haklar</h5>
+
+                                <div class="mb-3">
+                                    <label asp-for="HaftalikRandevuLimiti" class="form-label fw-bold">Haftalık Randevu Limiti</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="fas fa-calendar-check text-warning"></i></span>
+                                        <input asp-for="HaftalikRandevuLimiti" class="form-control" />
+                                    </div>
+                                    <span asp-validation-for="HaftalikRandevuLimiti" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label asp-for="ToplamAiHakki" class="form-label fw-bold">AI Analiz Hakkı</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light"><i class="fas fa-robot text-warning"></i></span>
+                                        <input asp-for="ToplamAiHakki" class="form-control" />
+                                    </div>
+                                    <span asp-validation-for="ToplamAiHakki" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3 mt-4 p-3 border rounded bg-light d-flex justify-content-between align-items-center">
+                                    <label class="form-check-label fw-bold mb-0" for="sinirsizSwitch">
+                                        <i class="fas fa-infinity text-primary me-2"></i> Sınırsız Erişim
+                                    </label>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="sinirsizSwitch" asp-for="SinirsizMi" style="width: 3em; height: 1.5em;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-between align-items-center">
+                            <a asp-action="Index" class="btn btn-outline-secondary px-4 shadow-sm">
+                                <i class="fas fa-arrow-left me-2"></i> Vazgeç
+                            </a>
+                            <button type="submit" class="btn btn-warning fw-bold px-5 shadow-sm">
+                                <i class="fas fa-save me-2"></i> Değişiklikleri Kaydet
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

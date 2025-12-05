@@ -1,0 +1,84 @@
+﻿@model SporSalonuProjesi.Models.Randevu
+
+@{
+    ViewData["Title"] = "Randevu Sil";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm border-danger">
+        <div class="card-header bg-danger text-white">
+            <h3 class="card-title mb-0">
+                <i class="fa fa-exclamation-triangle"></i> Randevu Silme Onayı
+            </h3>
+        </div>
+        <div class="card-body">
+
+            <div class="alert alert-warning text-center" role="alert">
+                <strong>Dikkat!</strong> Aşağıdaki randevuyu silmek üzeresiniz. Bu işlem geri alınamaz.
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="fw-bold text-muted">Üye Adı Soyadı</label>
+                        <div class="form-control-plaintext border p-2 rounded bg-light">
+                            @Html.DisplayFor(model => model.UyeAdSoyad)
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-bold text-muted">Eğitmen Adı</label>
+                        <div class="form-control-plaintext border p-2 rounded bg-light">
+                            @Html.DisplayFor(model => model.EgitmenAdi)
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-bold text-muted">Randevu ID</label>
+                        <div class="form-control-plaintext border p-2 rounded bg-light">
+                            @Html.DisplayFor(model => model.RandevuId)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="fw-bold text-muted">Tarih</label>
+                        <div class="form-control-plaintext border p-2 rounded bg-light">
+                            @Html.DisplayFor(model => model.Tarih)
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-bold text-muted">Saat</label>
+                        <div class="form-control-plaintext border p-2 rounded bg-light">
+                            @Html.DisplayFor(model => model.Saat)
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-bold text-muted">Durum</label>
+                        <div class="form-control-plaintext border p-2 rounded bg-light">
+                            @Html.DisplayFor(model => model.Durum)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fa fa-arrow-left"></i> Vazgeç ve Dön
+                    </a>
+                    <button type="submit" class="btn btn-danger px-4">
+                        <i class="fa fa-trash"></i> Silmeyi Onayla
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

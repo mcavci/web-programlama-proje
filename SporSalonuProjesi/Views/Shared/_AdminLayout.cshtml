@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Spor Salonu Paneli</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <style>
+        body {
+            overflow-x: hidden;
+            background-color: #f1f5f9; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #wrapper {
+            display: flex;
+            width: 100%;
+            align-items: stretch;
+        }
+
+       
+        #sidebar-wrapper {
+            min-width: 280px;
+            max-width: 280px;
+            min-height: 100vh;
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); 
+            color: #fff;
+            transition: all 0.3s ease;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .sidebar-link {
+            color: #94a3b8;
+            text-decoration: none;
+            padding: 12px 20px;
+            margin-bottom: 8px;
+            border-radius: 12px; 
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+        }
+
+            .sidebar-link i {
+                width: 25px;
+                font-size: 1.1rem;
+                margin-right: 12px;
+                transition: transform 0.3s;
+            }
+
+           
+            .sidebar-link:hover {
+                background: rgba(255, 255, 255, 0.08);
+                color: #fff;
+                transform: translateX(5px);
+                border-left-color: #38bdf8;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+
+                .sidebar-link:hover i {
+                    transform: scale(1.2);
+                    color: #38bdf8;
+                }
+
+       
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.2) !important;
+            color: #ef4444 !important;
+            border-left-color: #ef4444 !important;
+        }
+
+            .logout-btn:hover i {
+                color: #ef4444 !important;
+            }
+
+        
+        .site-btn {
+            border: 1px dashed #475569;
+        }
+
+        
+        #page-content-wrapper {
+            width: 100%;
+            background-color: #f8f9fa;
+        }
+
+       
+        .navbar-custom {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 15px 25px;
+        }
+
+        
+        #wrapper.toggled #sidebar-wrapper {
+            margin-left: -280px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="wrapper">
+
+        <div id="sidebar-wrapper" class="d-flex flex-column p-3">
+
+            <a href="/Admin/Index" class="d-flex align-items-center mb-4 mt-2 text-white text-decoration-none px-2">
+                <div class="bg-primary rounded-3 p-2 me-3 d-flex align-items-center justify-content-center shadow" style="width: 40px; height: 40px;">
+                    <i class="fas fa-dumbbell text-white"></i>
+                </div>
+                <span class="fs-4 fw-bold tracking-tight">SporPanel</span>
+            </a>
+
+            <hr class="text-secondary opacity-25 mb-4 mt-0">
+
+            <div class="nav nav-pills flex-column mb-auto">
+
+                <a href="/Admin/Index" class="sidebar-link">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+
+                <a href="/Randevus/Index" class="sidebar-link">
+                    <i class="fas fa-calendar-check"></i> Randevular
+                </a>
+
+                <a href="/Uyeler/Index" class="sidebar-link">
+                    <i class="fas fa-users"></i> Üyeler
+                </a>
+
+                <a href="/Egitmen1/Index" class="sidebar-link">
+                    <i class="fas fa-user-tie"></i> Eğitmenler
+                </a>
+
+                <a href="/Pakets/Index" class="sidebar-link">
+                    <i class="fas fa-tags"></i> Paketler
+                </a>
+
+                <a href="/DersProgramis/Index" class="sidebar-link">
+                    <i class="fas fa-clipboard-list"></i> Ders Programları
+                </a>
+                <a href="/Admins/Index" class="sidebar-link">
+                    <i class="fas fa-clipboard-list"></i> Adminler
+                </a>
+            </div>
+
+            <div class="mt-5 pt-3 border-top border-secondary border-opacity-25">
+                <a href="/" class="sidebar-link site-btn mb-2">
+                    <i class="fas fa-globe"></i> Siteye Dön
+                </a>
+
+                <a href="/Admin/Logout" class="sidebar-link logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Güvenli Çıkış
+                </a>
+            </div>
+        </div>
+        <div id="page-content-wrapper">
+
+            <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+                <div class="container-fluid">
+                    <button class="btn btn-light shadow-sm border" id="menu-toggle">
+                        <i class="fas fa-bars text-secondary"></i>
+                    </button>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mt-2 mt-lg-0 align-items-center">
+                            <li class="nav-item me-3">
+                                <span class="nav-link text-secondary fw-bold small text-uppercase">Yönetici Paneli</span>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                                    <img src="/img/Admin.png" alt="Admin" width="35" height="35" class="rounded-circle border shadow-sm me-2">
+                                    <span class="text-dark fw-bold">Admin</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end border-0 shadow mt-2">
+                                    <li><a class="dropdown-item" href="/Admin/Logout"><i class="fas fa-sign-out-alt me-2 text-danger"></i>Çıkış Yap</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container-fluid py-4 px-4">
+                @RenderBody()
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+       
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

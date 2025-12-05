@@ -1,0 +1,153 @@
+﻿
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+    /* 2. Arka Plan ve Ana Kapsayıcı */
+    body.admin-login-page {
+        background: linear-gradient(135deg, #e0eafe 0%, #f0f4f8 100%); 
+        position: relative; 
+        width: 100%;
+        height: 100%;
+    }
+
+/* 3. Kartın Kendisi  */
+.admin-panel-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 380px;
+    padding: 45px 35px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0, 50, 100, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* 4. Logo/İkon */
+.admin-avatar-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #06b6d4); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    color: #fff;
+    box-shadow: 0 8px 15px rgba(59, 130, 246, 0.3);
+}
+
+/* 5. Başlıklar */
+.admin-title {
+    color: #1e293b;
+    font-weight: 700;
+    margin: 0 0 10px;
+    font-size: 1.5rem;
+}
+
+.admin-subtitle {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin: 0 0 30px;
+}
+
+/* 6. Input Alanları */
+.input-group-custom {
+    position: relative;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.admin-custom-input {
+    width: 100%;
+    background-color: #f1f5f9;
+    border: 2px solid transparent;
+    color: #334155;
+    padding: 14px 15px 14px 45px; 
+    border-radius: 10px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.input-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    font-size: 16px;
+    transition: color 0.3s;
+    pointer-events: none; 
+}
+
+/* Inputa Tıklanınca */
+.admin-custom-input:focus {
+    background-color: #fff;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+    .admin-custom-input:focus + .input-icon {
+        color: #3b82f6;
+    }
+
+/* 7. Buton */
+.admin-submit-btn {
+    background: linear-gradient(90deg, #3b82f6, #2563eb);
+    color: #fff;
+    border: none;
+    padding: 15px;
+    width: 100%;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 10px;
+}
+
+    .admin-submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(37, 99, 235, 0.25);
+    }
+
+/* 8. Geri Linki */
+.admin-back-link {
+    display: inline-block;
+    margin-top: 25px;
+    color: #64748b;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+    .admin-back-link:hover {
+        color: #3b82f6;
+    }
+
+/* 9. Hata Mesajı */
+.admin-error-box {
+    background: #fef2f2;
+    color: #ef4444;
+    border: 1px solid #fee2e2;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}

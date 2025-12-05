@@ -1,0 +1,153 @@
+﻿/*
+   1. GENEL SAYFA (ARKA PLAN)
+  */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    min-height: 100vh;
+    padding-bottom: 50px; 
+}
+
+/* 
+   2. PROFİL KARTI (SOL TARAF)
+    */
+.custom-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    overflow: hidden;
+    background: #fff;
+}
+
+.profile-header-bg {
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    height: 150px;
+    border-radius: 15px 15px 0 0;
+}
+
+.avatar-container {
+    margin-top: -75px;
+    text-align: center;
+    position: relative;
+}
+
+.avatar-img {
+    width: 140px;
+    height: 140px;
+    border: 5px solid #fff;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    background-color: #fff;
+    object-fit: cover;
+}
+
+/* Boy/Kilo Kutucukları */
+.stat-card {
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    transition: transform 0.2s;
+}
+
+    .stat-card:hover {
+        transform: translateY(-3px);
+        background-color: #eef2ff;
+    }
+
+/*
+   3. RANDEVU TABLOSU (SAĞ TARAF - DÜZGÜN)
+  */
+.table-responsive {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.table-custom {
+    width: 100%;
+    border-collapse: collapse; 
+    margin-bottom: 0;
+}
+
+    /* Tablo Başlıkları */
+    .table-custom thead th {
+        background-color: #f8f9fa; 
+        color: #64748b; 
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        padding: 15px;
+        border-bottom: 2px solid #e2e8f0;
+        border-top: none;
+    }
+
+    /* Tablo Satırları */
+    .table-custom tbody td {
+        padding: 16px 15px;
+        vertical-align: middle;
+        color: #334155;
+        border-top: 1px solid #f1f5f9;
+        background-color: #fff;
+    }
+
+    /* Hover Efekti */
+    .table-custom tbody tr:hover td {
+        background-color: #f8fafc; 
+    }
+
+/* --- İKONLAR VE ETİKETLER --- */
+
+/* Eğitmen İkon Kutusu */
+.instructor-icon {
+    width: 42px;
+    height: 42px;
+    background-color: #eff6ff; 
+    color: #2563eb;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    margin-right: 12px;
+}
+
+/* Durum: Aktif (Yeşil) */
+.status-active {
+    background-color: #dcfce7;
+    color: #166534;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: inline-block;
+}
+
+/* Durum: Tamamlandı (Gri) */
+.status-completed {
+    background-color: #f1f5f9;
+    color: #64748b;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+/* İptal Butonu (Kırmızı) */
+.btn-cancel {
+    background-color: white;
+    border: 1px solid #fee2e2;
+    color: #ef4444;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+    .btn-cancel:hover {
+        background-color: #ef4444;
+        color: #fff;
+        border-color: #ef4444;
+    }

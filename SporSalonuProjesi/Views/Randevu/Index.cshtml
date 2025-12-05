@@ -1,0 +1,84 @@
+﻿@model List<SporSalonuProjesi.Models.Randevu>
+
+@{
+    ViewData["Title"] = "Randevularım";
+   
+}
+@if (ViewBag.Uyari != null)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Dikkat!</strong> @ViewBag.Uyari
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>📅 Randevularım</h2>
+        <a asp-controller="Randevu" asp-action="Al" class="btn btn-primary">
+            + Yeni Randevu Al
+        </a>
+    </div>
+
+    @if (TempData["BasariliMesaj"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>İşlem Başarılı!</strong> @TempData["BasariliMesaj"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (Model == null || Model.Count == 0)
+    {
+        <div class="alert alert-warning text-center p-5 shadow-sm">
+            <h4 class="alert-heading">Henüz hiç randevun yok!</h4>
+            <p>Formunu korumak için hemen bir antrenör seçip spora başlayabilirsin.</p>
+            <hr>
+            <a asp-controller="Egitmen" asp-action="Hoca" class="btn btn-warning fw-bold px-4">Hemen Eğitmen Seç</a>
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover mb-0 align-middle">
+                        <thead class="bg-dark text-white">
+                            <tr>
+                                <th class="py-3 ps-3">Eğitmen</th>
+                                <th>Tarih</th>
+                                <th>Saat</th>
+                                <th>Durum</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="fw-bold ps-3">@item.EgitmenAdi</td>
+                                    <td>@item.Tarih.ToShortDateString()</td>
+                                    <td>@item.Saat</td>
+                                    <td>
+                                        @if (item.Durum == "Bekliyor")
+                                        {
+                                            <span class="badge bg-warning text-dark">@item.Durum</span>
+                                        }
+                                        else if (item.Durum == "Onaylandı")
+                                        {
+                                            <span class="badge bg-success">@item.Durum</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">@item.Durum</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>

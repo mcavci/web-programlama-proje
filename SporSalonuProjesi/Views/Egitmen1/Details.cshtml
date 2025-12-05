@@ -1,0 +1,75 @@
+﻿@model SporSalonuProjesi.Models.Egitmen
+
+@{
+    ViewData["Title"] = "Eğitmen Detayı";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm border-info">
+        <div class="card-header bg-info text-white">
+            <h3 class="card-title mb-0">
+                <i class="fas fa-id-card me-2"></i> Eğitmen Profil Detayı
+            </h3>
+        </div>
+        <div class="card-body">
+
+            <div class="row align-items-start">
+                <div class="col-md-4 text-center border-end mb-3 mb-md-0">
+                    <div class="mb-3 mt-2">
+                        <img src="@Model.FotoUrl" class="rounded-circle img-thumbnail shadow-sm"
+                             style="width: 180px; height: 180px; object-fit: cover;"
+                             onerror="this.src='https://via.placeholder.com/180?text=No+Img'"
+                             alt="@Model.AdSoyad" />
+                    </div>
+
+                    <h4 class="fw-bold text-dark">@Html.DisplayFor(model => model.AdSoyad)</h4>
+                    <span class="badge bg-primary fs-6 mb-3">@Html.DisplayFor(model => model.Uzmanlik)</span>
+
+                    @if (!string.IsNullOrEmpty(Model.Instagram))
+                    {
+                        <div class="d-grid gap-2 col-8 mx-auto mt-3">
+                            <a href="@Model.Instagram" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill">
+                                <i class="fab fa-instagram me-2"></i> Instagram Profili
+                            </a>
+                        </div>
+                    }
+                </div>
+
+                <div class="col-md-8">
+                    <div class="p-2">
+                        <h5 class="text-muted border-bottom pb-2 mb-3">Hakkında</h5>
+                        <div class="p-3 bg-light rounded border mb-4">
+                            <p class="mb-0 text-dark">
+                                <i class="fas fa-quote-left text-muted me-2 opacity-50"></i>
+                                @Html.DisplayFor(model => model.Aciklama)
+                            </p>
+                        </div>
+
+                        <h5 class="text-muted border-bottom pb-2 mb-3">Teknik Detaylar</h5>
+                        <dl class="row">
+                            <dt class="col-sm-3 text-muted">Kayıt ID</dt>
+                            <dd class="col-sm-9 fw-bold">#@Html.DisplayFor(model => model.Id)</dd>
+
+                            <dt class="col-sm-3 text-muted">Fotoğraf Linki</dt>
+                            <dd class="col-sm-9 text-break small text-muted">
+                                @Html.DisplayFor(model => model.FotoUrl)
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="d-flex justify-content-between align-items-center">
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-2"></i> Listeye Dön
+                </a>
+
+                <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-warning fw-bold px-4">
+                    <i class="fas fa-edit me-2"></i> Düzenle
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

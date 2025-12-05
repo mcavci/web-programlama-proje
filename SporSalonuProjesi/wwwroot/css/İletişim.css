@@ -1,0 +1,98 @@
+﻿
+.contact-header {
+    background: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 100%); /* Mavi Gradyan */
+    color: white;
+    padding: 80px 0 60px 0;
+    border-radius: 0 0 50px 50px; /* Alt köşeleri kavisli yap */
+    margin-bottom: 50px;
+    box-shadow: 0 10px 30px rgba(13, 110, 253, 0.2);
+}
+
+.info-box {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    text-align: center;
+    transition: all 0.3s ease;
+    height: 100%;
+    border-bottom: 4px solid transparent;
+}
+
+    .info-box:hover {
+        transform: translateY(-10px);
+        border-bottom: 4px solid #0d6efd;
+        box-shadow: 0 15px 30px rgba(13, 110, 253, 0.15);
+    }
+
+    .info-box i {
+        font-size: 2.5rem;
+        color: #0d6efd;
+        margin-bottom: 15px;
+        background: #e7f1ff;
+        width: 70px;
+        height: 70px;
+        line-height: 70px;
+        border-radius: 50%;
+    }
+
+.contact-form-wrapper {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+}
+
+.form-control {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+    .form-control:focus {
+        background-color: white;
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1);
+    }
+
+.btn-gonder {
+    background: #0d6efd;
+    color: white;
+    border-radius: 10px;
+    transition: all 0.3s;
+}
+
+    .btn-gonder:hover {
+        background: #0b5ed7;
+        transform: scale(1.02);
+    }
+
+.map-container iframe {
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    width: 100%;
+    height: 100%;
+    min-height: 450px;
+}
+
+/* Accordion (SSS) Tasarımı */
+.accordion-button {
+    background-color: #fff;
+    color: #333;
+    font-weight: 600;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+}
+
+    .accordion-button:not(.collapsed) {
+        background-color: #e7f1ff; /* Açık mavi */
+        color: #0d6efd; /* Koyu Mavi Yazı */
+    }
+
+.accordion-item {
+    border: 1px solid #e9ecef;
+    margin-bottom: 10px;
+    border-radius: 10px !important;
+    overflow: hidden;
+}

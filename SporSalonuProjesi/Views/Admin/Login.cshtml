@@ -1,0 +1,57 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Yönetici Girişi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <link rel="stylesheet" href="~/css/AdminLogin.css" />
+</head>
+
+<body class="admin-login-page">
+
+    <div class="admin-panel-card">
+
+        <div class="admin-avatar-icon">
+            <i class="fas fa-user-shield"></i>
+        </div>
+
+        <h4 class="admin-title">Yönetim Paneli</h4>
+        <p class="admin-subtitle">Devam etmek için lütfen giriş yapın.</p>
+
+        @if (ViewBag.Hata != null)
+        {
+            <div class="admin-error-box">
+                <i class="fas fa-circle-exclamation"></i>
+                @ViewBag.Hata
+            </div>
+        }
+
+        <form asp-action="Login" method="post">
+
+            <div class="input-group-custom">
+                <input type="text" name="kadi" class="admin-custom-input" placeholder="Kullanıcı Adı" required autocomplete="off" />
+                <i class="fas fa-user input-icon"></i>
+            </div>
+
+            <div class="input-group-custom">
+                <input type="password" name="sifre" class="admin-custom-input" placeholder="Şifre" required />
+                <i class="fas fa-lock input-icon"></i>
+            </div>
+
+            <button type="submit" class="admin-submit-btn">
+                Giriş Yap
+            </button>
+        </form>
+
+        <a href="/Home/Index" class="admin-back-link">
+            <i class="fas fa-arrow-left" style="margin-right: 5px;"></i> Ana Sayfaya Dön
+        </a>
+    </div>
+
+</body>
+</html>

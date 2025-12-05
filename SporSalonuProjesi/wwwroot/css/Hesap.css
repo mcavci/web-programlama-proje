@@ -1,0 +1,95 @@
+﻿
+body {
+    font-family: 'Poppins', sans-serif;
+    /* Mavi Gradient Arka Plan */
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.register-card {
+    border: none;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+    .register-card:hover {
+        transform: translateY(-5px); 
+    }
+
+.card-header-custom {
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    color: white;
+    padding: 20px; 
+    border-bottom: none;
+}
+
+/* Input Odaklanma Efektleri */
+.form-floating input:focus {
+    box-shadow: none;
+    border-color: #0072ff;
+}
+
+.form-floating label {
+    color: #6c757d;
+    transition: all 0.2s;
+}
+
+.form-floating input:focus ~ label {
+    color: #0072ff;
+    font-weight: 600;
+}
+
+/* Buton Tasarımı */
+.btn-register {
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    border: none;
+    border-radius: 50px;
+    padding: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 114, 255, 0.4);
+}
+
+    .btn-register:hover {
+        background: linear-gradient(to right, #0072ff, #00c6ff);
+        box-shadow: 0 6px 20px rgba(0, 114, 255, 0.6);
+        transform: scale(1.02);
+    }
+
+/* Şifre Göster İkonu */
+.password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 20px;
+    cursor: pointer;
+    color: #6c757d;
+    z-index: 10;
+}
+
+/* Sayfa Giriş Animasyonu */
+.fade-in-up {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+

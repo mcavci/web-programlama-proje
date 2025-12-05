@@ -1,0 +1,132 @@
+﻿@{
+    ViewData["Title"] = "Akıllı Vücut Analizi";
+}
+
+<link href="~/css/saglık.css" rel="stylesheet" />
+<div class="container mt-5 pb-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold display-5"><span class="text-primary">AI Destekli</span> Vücut Analizi</h1>
+        <p class="lead text-muted">Fotoğrafını yükle, yapay zeka vücut tipini analiz edip sana özel program hazırlasın.</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-5">
+            <div class="card shadow-lg border-0 h-100 rounded-4 overflow-hidden bg-dark text-white">
+                <div class="card-header bg-gradient bg-primary p-4 text-white text-center border-0">
+                    <h4 class="mb-0 fw-bold"><i class="fas fa-camera-retro me-2"></i> Analiz Başlat</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="Hesapla" method="post" enctype="multipart/form-data">
+
+                        <div class="mb-4">
+                            <label class="form-label-dark mb-2">Vücut Fotoğrafı (Opsiyonel)</label>
+                            <label for="vucutResmi" class="upload-area w-100">
+                                <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                                <h6 class="fw-bold text-dark">Fotoğraf Seç veya Sürükle</h6>
+                                <p class="small text-muted mb-0">Daha doğru analiz için boydan fotoğraf önerilir.</p>
+                                <input type="file" id="vucutResmi" name="vucutResmi" class="d-none" accept="image/*" onchange="dosyaSecildi(this)" />
+                            </label>
+                            <div id="dosyaBilgisi" class="mt-2 text-success small fw-bold" style="display: none;">
+                                <i class="fas fa-check-circle"></i> <span id="dosyaAdi"></span> seçildi.
+                            </div>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <label class="form-label-dark">Boy (cm)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-secondary border-secondary text-white"><i class="fas fa-ruler-vertical"></i></span>
+                                    <input type="number" name="boy" class="form-control form-control-dark" placeholder="175" required />
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label-dark">Kilo (kg)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-secondary border-secondary text-white"><i class="fas fa-weight"></i></span>
+                                    <input type="number" name="kilo" class="form-control form-control-dark" placeholder="70" required />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 mt-3">
+                            <label class="form-label-dark">Cinsiyet</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-secondary border-secondary text-white"><i class="fas fa-venus-mars"></i></span>
+                                <select name="cinsiyet" class="form-select form-control-dark">
+                                    <option value="Erkek">Erkek</option>
+                                    <option value="Kadın">Kadın</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 py-3 fw-bold rounded-pill shadow-sm">
+                            <i class="fas fa-magic me-2 fa-lg"></i> Analizi Başlat
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-7">
+            @if (ViewBag.Goster == true)
+            {
+                <div class="card result-card border-0 h-100 rounded-4 overflow-hidden">
+                    <div class="card-header bg-success bg-gradient p-4 text-white d-flex justify-content-between align-items-center border-0">
+                        <h4 class="mb-0 fw-bold"><i class="fas fa-robot me-2"></i> Gemini Analiz Raporu</h4>
+                        @if (ViewBag.ResimVarMi == true)
+                        {
+                            <span class="badge bg-white text-success px-3 py-2 rounded-pill shadow-sm">
+                                <i class="fas fa-image me-1"></i> Görsel Analiz Dahil
+                            </span>
+                        }
+                    </div>
+                    <div class="card-body p-4 bg-light" style="max-height: 600px; overflow-y: auto;">
+
+                        <div class="markdown-content p-3 bg-white rounded-3 shadow-sm border">
+                            <div style="white-space: pre-line; font-size: 1.05rem; line-height: 1.6;">
+                                @ViewBag.YapayZekaCevabi
+                            </div>
+                        </div>
+
+                        <div class="alert alert-warning d-flex align-items-center mt-4 rounded-3 shadow-sm border-warning" role="alert">
+                            <i class="fas fa-exclamation-triangle fa-2x me-3 text-warning"></i>
+                            <div>
+                                <strong>Önemli Hatırlatma:</strong> Bu program yapay zeka tarafından oluşturulmuş bir tavsiyedir. Herhangi bir sağlık sorununuz varsa uygulamadan önce mutlaka doktorunuza danışın.
+                            </div>
+                        </div>
+
+                        <a asp-controller="Egitmen" asp-action="Hoca" class="btn btn-success w-100 py-3 mt-2 fw-bold rounded-pill shadow">
+                            <i class="fas fa-dumbbell me-2 fa-lg"></i> Bu Programa Uygun Eğitmen Seç
+                        </a>
+
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="d-flex flex-column align-items-center justify-content-center h-100 p-5 text-center rounded-4 border border-2 border-dashed bg-light">
+                    <div class="mb-4 text-primary opacity-75">
+                        <i class="fas fa-brain fa-7x"></i>
+                    </div>
+                    <h2 class="fw-bold text-dark">Yapay Zeka Senin İçin Hazır!</h2>
+                    <p class="lead text-muted col-md-10 mx-auto">
+                        Sol taraftaki formu doldur, fotoğrafını yükle ve Gemini'ın senin için en uygun antrenman ve beslenme rotasını çizmesini bekle.
+                    </p>
+                    <div class="mt-3 text-muted small">
+                        <i class="fas fa-info-circle me-1"></i> Sonuçlar birkaç saniye içinde burada belirecek.
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    function dosyaSecildi(input) {
+        if (input.files && input.files[0]) {
+            document.getElementById('dosyaAdi').textContent = input.files[0].name;
+            document.getElementById('dosyaBilgisi').style.display = 'block';
+            input.parentElement.classList.add('border-success', 'bg-success', 'bg-opacity-10');
+        }
+    }
+</script>

@@ -1,0 +1,79 @@
+﻿@model SporSalonuProjesi.Models.Egitmen
+
+@{
+    ViewData["Title"] = "Eğitmen Sil";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm border-danger">
+        <div class="card-header bg-danger text-white">
+            <h3 class="card-title mb-0">
+                <i class="fas fa-exclamation-triangle me-2"></i> Eğitmen Silme İşlemi
+            </h3>
+        </div>
+        <div class="card-body">
+
+            <div class="alert alert-warning text-center" role="alert">
+                <strong>Dikkat!</strong> Aşağıdaki eğitmen kaydını silmek üzeresiniz. Bu işlem geri alınamaz.
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-md-4 text-center border-end">
+                    <div class="mb-3">
+                        <img src="@Model.FotoUrl" class="rounded-circle img-thumbnail shadow-sm"
+                             style="width: 150px; height: 150px; object-fit: cover;"
+                             onerror="this.src='https://via.placeholder.com/150'" />
+                    </div>
+                    <h4 class="fw-bold text-dark">@Html.DisplayFor(model => model.AdSoyad)</h4>
+                    <span class="badge bg-primary fs-6">@Html.DisplayFor(model => model.Uzmanlik)</span>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="p-3">
+                        <dl class="row mb-0">
+                            <dt class="col-sm-3 text-muted">Açıklama</dt>
+                            <dd class="col-sm-9">
+                                <p class="text-dark bg-light p-2 rounded border">
+                                    @Html.DisplayFor(model => model.Aciklama)
+                                </p>
+                            </dd>
+
+                            <dt class="col-sm-3 text-muted">Instagram</dt>
+                            <dd class="col-sm-9">
+                                @if (!string.IsNullOrEmpty(Model.Instagram))
+                                {
+                                    <a href="@Model.Instagram" target="_blank" class="text-danger fw-bold text-decoration-none">
+                                        <i class="fab fa-instagram"></i> @Model.Instagram
+                                    </a>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">-</span>
+                                }
+                            </dd>
+
+                            <dt class="col-sm-3 text-muted">Kayıt ID</dt>
+                            <dd class="col-sm-9 text-secondary">#@Html.DisplayFor(model => model.Id)</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-2"></i> Listeye Dön
+                    </a>
+
+                    <button type="submit" class="btn btn-danger px-4 fw-bold shadow-sm">
+                        <i class="fas fa-trash-alt me-2"></i> Silmeyi Onayla
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

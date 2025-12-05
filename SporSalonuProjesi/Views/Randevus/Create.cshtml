@@ -1,0 +1,73 @@
+﻿@model SporSalonuProjesi.Models.Randevu
+
+@{
+    ViewData["Title"] = "Randevu Oluştur";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Randevu Oluştur</h4>
+                </div>
+                <div class="card-body">
+
+                    <form asp-action="Create">
+                        <input type="hidden" asp-for="UyeId" />
+                        <input type="hidden" asp-for="Durum" value="Onay Bekliyor" />
+                        <input type="hidden" asp-for="RandevuId" />
+                        <input type="hidden" asp-for="UyeAdSoyad" />
+                        <input type="hidden" asp-for="EgitmenAdi" />
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        @if (ViewBag.Hata != null)
+                        {
+                            <div class="alert alert-warning">@ViewBag.Hata</div>
+                        }
+
+                        <div class="mb-3">
+                            <label class="form-label">Eğitmen</label>
+                            <select asp-for="EgitmenId" class="form-select" id="drpEgitmen" asp-items="ViewBag.EgitmenListesi">
+                                <option value="">Seçiniz...</option>
+                            </select>
+                            <span asp-validation-for="EgitmenId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Tarih</label>
+                            <input asp-for="Tarih" type="date" class="form-control" id="dtpTarih" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                            <span asp-validation-for="Tarih" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Saat</label>
+                            <select asp-for="Saat" class="form-select" id="drpSaat">
+                                <option value="">Önce Eğitmen ve Tarih Seçin</option>
+                            </select>
+                            <span asp-validation-for="Saat" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Randevuyu Kaydet</button>
+                            <a asp-action="Index" class="btn btn-secondary">İptal</a>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="~/js/RandevuAl.js"></script>
+}

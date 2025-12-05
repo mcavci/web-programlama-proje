@@ -1,0 +1,86 @@
+﻿@model SporSalonuProjesi.Models.DersProgrami
+
+@{
+    ViewData["Title"] = "Ders Programı Sil";
+    ViewData["FooterGizle"] = true;
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-trash-alt me-2"></i> Ders Programını Sil
+                    </h4>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <div class="alert alert-warning text-center border-warning" role="alert">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>Dikkat!</strong> Bu ders programını listeden silmek üzeresiniz. Bu işlem geri alınamaz.
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6 border-end">
+                            <h5 class="text-danger border-bottom pb-2 mb-3">Ders Bilgileri</h5>
+
+                            <div class="mb-3">
+                                <label class="fw-bold text-muted small">Ders Adı</label>
+                                <div class="fs-5 text-dark">
+                                    <i class="fas fa-dumbbell text-danger me-2"></i> @Html.DisplayFor(model => model.DersAdi)
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="fw-bold text-muted small">Eğitmen</label>
+                                <div class="fs-5 text-dark">
+                                    <i class="fas fa-user-tie text-danger me-2"></i> @Html.DisplayFor(model => model.Egitmen.AdSoyad)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 ps-md-4">
+                            <h5 class="text-danger border-bottom pb-2 mb-3">Zaman Çizelgesii</h5>
+
+                            <div class="mb-3">
+                                <label class="fw-bold text-muted small">Gün</label>
+                                <div class="fs-5 text-dark">
+                                    <i class="fas fa-calendar-day text-danger me-2"></i> @Html.DisplayFor(model => model.Gun)
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="fw-bold text-muted small">Saat Aralığı</label>
+                                <div class="fs-5 text-dark">
+                                    <i class="far fa-clock text-danger me-2"></i>
+                                    @Html.DisplayFor(model => model.BaslangicSaati) - @Html.DisplayFor(model => model.BitisSaati)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-danger btn-lg shadow-sm">
+                                <i class="fas fa-trash-alt me-2"></i> Evet, Dersi Sil
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary">
+                                <i class="fas fa-times me-2"></i> Vazgeç ve Dön
+                            </a>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+﻿@model SporSalonuProjesi.Models.Paket
+
+@{
+    ViewData["Title"] = "Paket Sil";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-trash-alt me-2"></i> Paketi Sil
+                    </h3>
+                </div>
+                <div class="card-body p-4">
+
+                    <div class="alert alert-warning text-center border-warning" role="alert">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>Dikkat!</strong> "<span class="fw-bold text-dark">@Model.PaketAdi</span>" paketini silmek üzeresiniz. Bu işlem geri alınamaz!
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 border-end">
+                            <h5 class="text-danger border-bottom pb-2 mb-3">Paket Bilgileri</h5>
+
+                            <div class="mb-3">
+                                <label class="fw-bold text-muted small">Paket Adı</label>
+                                <div class="fs-5 text-dark fw-bold">
+                                    <i class="fas fa-box text-danger me-2"></i> @Html.DisplayFor(model => model.PaketAdi)
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="fw-bold text-muted small">Fiyat</label>
+                                <div class="fs-4 text-success fw-bold">
+                                    <i class="fas fa-lira-sign me-1"></i> @Html.DisplayFor(model => model.Fiyat)
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="fw-bold text-muted small">Süre</label>
+                                <div class="fs-6 text-dark">
+                                    <i class="far fa-clock text-danger me-2"></i> @Html.DisplayFor(model => model.SureAy) Ay
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 ps-md-4">
+                            <h5 class="text-danger border-bottom pb-2 mb-3">Özellikler & Limitler</h5>
+
+                            <div class="mb-3">
+                                <label class="fw-bold text-muted small">Haftalık Randevu</label>
+                                <div>
+                                    <span class="badge bg-secondary fs-6">
+                                        @Html.DisplayFor(model => model.HaftalikRandevuLimiti) Adet
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="fw-bold text-muted small">AI Analiz Hakkı</label>
+                                <div>
+                                    <span class="badge bg-info text-dark fs-6">
+                                        @Html.DisplayFor(model => model.ToplamAiHakki) Adet
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="fw-bold text-muted small">Sınırsız Erişim</label>
+                                <div>
+                                    @if (Model.SinirsizMi)
+                                    {
+                                        <span class="badge bg-success"><i class="fas fa-check me-1"></i> Evet, Sınırsız</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary"><i class="fas fa-times me-1"></i> Hayır, Limitli</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="PaketId" />
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-between align-items-center">
+                            <a asp-action="Index" class="btn btn-outline-secondary px-4">
+                                <i class="fas fa-arrow-left me-2"></i> Vazgeç
+                            </a>
+                            <button type="submit" class="btn btn-danger px-5 fw-bold shadow-sm">
+                                <i class="fas fa-trash-alt me-2"></i> Silmeyi Onayla
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

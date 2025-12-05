@@ -1,0 +1,497 @@
+﻿@model List<SporSalonuProjesi.Models.Paket>
+
+@{
+    ViewData["Title"] = "Anasayfa";
+    // Controller'dan gelen "Kullanıcının şu anki paketi hangisi?" bilgisi
+    int? aktifPaketId = ViewBag.AktifPaketId as int?;
+}
+<link href="~/css/site.css" rel="stylesheet" />
+
+@if (ViewBag.KullaniciAd != null)
+{
+    <div class="alert alert-success text-center alert-dismissible fade show mb-0" role="alert">
+        <strong>🎉 Hoş Geldin, @ViewBag.KullaniciAd!</strong> Bugün antrenman yapmak için harika bir gün.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="p-5 mb-4 bg-dark text-white rounded-3 shadow"
+    style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/img/anasayfa.jpg'); background-size: cover; background-position: center;">
+
+    <div class="container-fluid py-5 text-center">
+        <h1 class="display-4 fw-bold">Formda Kal, Güçlü Yaşa!</h1>
+        <p class="col-md-8 fs-4 mx-auto">Profesyonel eğitmenler, son teknoloji ekipmanlar ve yapay zeka destekli analiz sistemiyle hedefine ulaş.</p>
+
+        <div class="d-flex justify-content-center gap-3 mt-4">
+            @if (ViewBag.KullaniciAd != null)
+            {
+                <a asp-controller="Randevu" asp-action="Al" class="btn btn-danger btn-lg px-4">
+                    <i class="fas fa-calendar-check"></i> Hemen Randevu Al
+                </a>
+            }
+            else
+            {
+                <a asp-controller="Hesap" asp-action="Register" class="btn btn-danger btn-lg px-4">
+                    <i class="fas fa-user-plus"></i> Hemen Kayıt Ol
+                </a>
+            }
+
+            <a asp-controller="Saglik" asp-action="Index" class="btn btn-outline-light btn-lg px-4">
+                <i class="fas fa-robot"></i> AI Vücut Analizi
+            </a>
+        </div>
+    </div>
+</div>
+
+@if (ViewBag.KullaniciAd != null)
+{
+    <div class="card mb-5 border-0 shadow-sm" style="background-color: #f8f9fa; border-left: 5px solid #dc3545 !important;">
+        <div class="card-body p-4">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h2 class="fw-bold text-dark">👋 Merhaba, @ViewBag.KullaniciAd</h2>
+                    <p class="text-muted mb-0">
+                        Spora hoş geldin! Bugün antrenman günün mü?
+                        <a asp-controller="Egitmen" asp-action="Hoca" class="text-danger fw-bold text-decoration-none">Eğitmenleri İncele ></a>
+                    </p>
+                </div>
+
+                @if (ViewBag.VkiDegeri != null)
+                {
+                    <div class="col-md-4 text-end border-start border-2">
+                        <small class="text-uppercase text-muted fw-bold">Vücut Kitle İndeksi</small>
+                        <div class="d-flex align-items-center justify-content-end mt-2">
+                            <h1 class="display-5 fw-bold text-@ViewBag.VkiRenk mb-0 me-3">@ViewBag.VkiDegeri</h1>
+                            <div class="text-end">
+                                <span class="badge bg-@ViewBag.VkiRenk px-3 py-2 rounded-pill">@ViewBag.VkiDurum</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row align-items-center mb-5 bg-white p-4 rounded-3 shadow-sm border">
+    <div class="col-md-5 text-center">
+        <i class="fas fa-brain text-primary" style="font-size: 8rem; opacity: 0.8;"></i>
+    </div>
+    <div class="col-md-7">
+        <h2 class="fw-bold text-primary">🤖 Yapay Zeka Destekli Program</h2>
+        <p class="lead text-muted">Standart programlardan sıkıldın mı?</p>
+        <p>
+            Google Gemini altyapısını kullanarak geliştirdiğimiz <strong>Akıllı Vücut Analiz Robotu</strong> ile
+            boy ve kilona en uygun antrenman ve beslenme programını saniyeler içinde oluştur.
+        </p>
+        <a asp-controller="Saglik" asp-action="Index" class="btn btn-primary">
+            Hemen Analiz Et ve Programını Al <i class="fas fa-arrow-right ms-1"></i>
+        </a>
+    </div>
+</div>
+
+<div class="row align-items-md-stretch mb-5">
+    <div class="col-md-6">
+        <div class="h-100 p-5 text-white bg-dark rounded-3 shadow-sm">
+            <h2><i class="fas fa-dumbbell text-danger"></i> Profesyonel Eğitmenler</h2>
+            <p>Alanında uzman hocalarımızla kişisel gelişimini en üst seviyeye taşı.</p>
+            <a asp-controller="Egitmen" asp-action="Hoca" class="btn btn-outline-light">Eğitmenleri Gör</a>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="h-100 p-5 bg-light border rounded-3 shadow-sm">
+            <h2><i class="fas fa-users text-success"></i> Grup Dersleri</h2>
+            <p>Aşağıdaki takvimi inceleyerek kendine uygun dersi seç!</p>
+            <a href="#dersProgrami" class="btn btn-outline-secondary">Programı İncele 👇</a>
+        </div>
+    </div>
+</div>
+
+<div id="dersProgrami" class="row mb-5 p-4 bg-white rounded-3 shadow-sm border">
+    <div class="col-12 text-center mb-4">
+        <h2 class="fw-bold text-dark"><i class="fas fa-calendar-alt text-danger"></i> Haftalık Ders Programı</h2>
+        <p class="text-muted">Dersin üstüne tıklayarak hemen randevu alabilirsin.</p>
+    </div>
+
+    <div class="col-12 table-responsive">
+        @{
+            var dersListesi = ViewBag.DersProgrami as List<SporSalonuProjesi.Models.DersProgrami> ?? new List<SporSalonuProjesi.Models.DersProgrami>();           
+            DateTime bugun = DateTime.Today;
+            int bugunIndex = (int)bugun.DayOfWeek; 
+            if (bugunIndex == 0) bugunIndex = 7; 
+            DateTime buHaftaPazartesi = bugun.AddDays(1 - bugunIndex);
+
+           
+            string[] gunSutunlari = { "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi" };
+
+            // 4. SAATLERİ OTOMATİK OLUŞTURALIM 09:00 - 21:00 
+            List<TimeSpan> saatSatirlari = new List<TimeSpan>();
+            for (int i = 9; i <= 21; i++) 
+            {
+                saatSatirlari.Add(new TimeSpan(i, 0, 0));
+            }
+        }
+
+        <table class="table table-gym table-hover text-center align-middle table-bordered">
+            <thead class="bg-dark text-white">
+                <tr>
+                    <th class="py-3 bg-danger text-white" style="width: 10%;">SAAT</th>
+
+                    @foreach (var gunAdi in gunSutunlari)
+                    {
+                        // Sütunların altına tarih yazmak için hesaplama
+                        int gunFarki = 0;
+                        switch (gunAdi)
+                        {
+                            case "Pazartesi": gunFarki = 0; break;
+                            case "Salı": gunFarki = 1; break;
+                            case "Çarşamba": gunFarki = 2; break;
+                            case "Perşembe": gunFarki = 3; break;
+                            case "Cuma": gunFarki = 4; break;
+                            case "Cumartesi": gunFarki = 5; break;
+                        }
+                        DateTime tarih = buHaftaPazartesi.AddDays(gunFarki);
+
+                        <th class="py-3" style="min-width: 120px;">
+                            @gunAdi <br />
+                            <span class="badge bg-secondary fw-light" style="font-size: 11px;">@tarih.ToString("dd.MM")</span>
+                        </th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var saat in saatSatirlari)
+                {
+                    <tr>
+                        <td class="fw-bold bg-light text-danger">@saat.ToString(@"hh\:mm")</td>
+
+                        @foreach (var gunAdi in gunSutunlari)
+                        {                          
+                            // Veritabanındaki listeden; GÜNÜ ve SAATİ uyan dersi bul
+                            var ders = dersListesi.FirstOrDefault(x =>
+                            x.Gun != null &&
+                            x.Gun.Trim().ToLower() == gunAdi.Trim().ToLower() && // Büyük/Küçük harf hatasını yoksay
+                            x.BaslangicSaati.Hours == saat.Hours // Sadece saate bak
+                            );
+
+                            // Link için tarih hesapla
+                            int gunFarki = 0;
+                            switch (gunAdi)
+                            {
+                                case "Pazartesi": gunFarki = 0; break;
+                                case "Salı": gunFarki = 1; break;
+                                case "Çarşamba": gunFarki = 2; break;
+                                case "Perşembe": gunFarki = 3; break;
+                                case "Cuma": gunFarki = 4; break;
+                                case "Cumartesi": gunFarki = 5; break;
+                            }
+                            DateTime linkTarihi = buHaftaPazartesi.AddDays(gunFarki);
+
+                            <td>
+                                @if (ders != null)
+                                {
+                                    <a href="/Randevu/Al?egitmenId=@ders.EgitmenId&tarih=@linkTarihi.ToString("yyyy-MM-dd")&saat=@ders.BaslangicSaati.ToString(@"hh\:mm")"
+                                       class="text-decoration-none d-block h-100">
+
+                                        <div class="p-2 rounded border border-danger bg-danger bg-opacity-10 hover-effect shadow-sm h-100 d-flex flex-column justify-content-center">
+                                            <div class="fw-bold text-dark text-uppercase" style="font-size: 14px;">@ders.DersAdi</div>
+
+                                            <div class="small text-muted mt-1">
+                                                @(ders.Egitmen != null ? ders.Egitmen.AdSoyad : "")
+                                            </div>
+
+                                            <div class="mt-1">
+                                                <span class="badge bg-danger" style="font-size: 10px;">
+                                                    <i class="fas fa-users"></i> @ders.Kontenjan
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <span class="text-muted opacity-25 fw-bold" style="font-size: 20px;">-</span>
+                                }
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="container py-5">
+
+    @{
+        var haberListesi = new[]
+        {
+        new {
+        Baslik = "Hipertrofi İçin İdeal Tekrar Sayısı Kaç?",
+        Ozet = "Kas büyütmek için 'az tekrar çok ağırlık' mı yoksa 'çok tekrar' mı? Bilimsel araştırmaların son sonuçları şaşırtıcı.",
+        Resim = "/img/haber1.jpg",
+        Kategori = "ANTRENMAN",
+        AiYorumu = "6-12 tekrar aralığı idealdir ancak tükenişe gitmek şartıyla 30 tekrar da kas yapar.",
+        Link = "https://proteinocean.com/blog/hipertrofi-antrenmani-nedir-nasil-yapilir-tekrar-sayisi-kac-olmali?srsltid=AfmBOordRSCXaXfWsZiwDzlHcMV4KFCNpWvHdAfKTZThlqC7Pbp4Yb9f"
+        },
+        new {
+        Baslik = "Kreatin Saç Döker Mi? Efsaneler ve Gerçekler",
+        Ozet = "En popüler supplement hakkında merak edilenler. Böbreklere zarar verir mi, su tutar mı, saç döker mi?",
+        Resim = "/img/haber2.jpg",
+        Kategori = "BESLENME",
+        AiYorumu = "Kreatin güvenlidir. Saç dökülmesiyle doğrudan bilimsel bir bağı kanıtlanmamıştır.",
+        Link = "https://elosklinik.com/medikal-estetik/sac-dokulmesi-tedavisi/kreatin-sac-doker-mi-kreatin-kullanimi-ve-sac-dokulmesi-iliskisi/#:~:text=Bilimsel%20ara%C5%9Ft%C4%B1rmalar%2C%20kreatin%20kullan%C4%B1m%C4%B1n%C4%B1n%20do%C4%9Frudan%20sa%C3%A7%20d%C3%B6k%C3%BClmesine%20neden%20olmad%C4%B1%C4%9F%C4%B1n%C4%B1%20g%C3%B6stermektedir."
+        },
+        new {
+        Baslik = "Recovery: Soğuk Duş Mu, Sauna Mı?",
+        Ozet = "Antrenman sonrası toparlanmayı hızlandırmak için hangisini seçmelisin? İnflamasyon ve kas ağrıları için rehber.",
+        Resim = "/img/haber3.jpg",
+        Kategori = "SAĞLIK",
+        AiYorumu = "Kas büyümesi istiyorsan antrenmandan hemen sonra soğuk duştan kaçın.",
+        Link = "https://alphasauna.com/tr/ice-bath-vs-cold-shower-which-is-better-for-recovery/"
+        }
+        };
+    }
+
+    <div class="row mb-5 justify-content-center">
+        <div class="col-lg-8 text-center">
+            <h2 class="display-6 fw-bold text-dark mb-3">
+                <span class="text-danger">CANGYM</span> Blog
+            </h2>
+            <p class="text-muted lead">
+                <i class="fas fa-rss text-danger me-2"></i>
+                Spor dünyasından son gelişmeler ve bilimsel analizler.
+            </p>
+            <div class="d-inline-block border-bottom border-danger border-3" style="width: 60px;"></div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        @foreach (var haber in haberListesi)
+        {
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 border-0 shadow-sm news-card hover-up">
+
+                    <div class="position-relative overflow-hidden" style="height: 250px; border-radius: 10px 10px 0 0;">
+                        <img src="@haber.Resim" class="card-img-top w-100 h-100 object-fit-cover transition-img" alt="@haber.Baslik">
+
+                        <div class="position-absolute top-0 start-0 p-3">
+                            <span class="badge bg-danger text-white px-3 py-2 shadow fw-normal">
+                                @haber.Kategori
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="card-body d-flex flex-column p-4">
+
+                        <h5 class="card-title fw-bold text-dark mb-3 text-clamp-2">
+                            @haber.Baslik
+                        </h5>
+
+                        <p class="card-text text-muted small mb-4 text-clamp-3 flex-grow-1">
+                            @haber.Ozet
+                        </p>
+
+                        <div class="bg-light p-3 rounded border-start border-danger border-3 mb-4">
+                            <div class="d-flex align-items-center mb-1">
+                                <i class="fas fa-robot text-danger me-2"></i>
+                                <span class="fw-bold text-danger x-small">GEMINI ANALİZİ</span>
+                            </div>
+                            <p class="mb-0 fst-italic text-dark x-small">
+                                "@haber.AiYorumu"
+                            </p>
+                        </div>
+
+                        <a href="@haber.Link" target="_blank" class="btn btn-outline-dark w-100 rounded-pill fw-bold stretched-link">
+                            Haberi Oku <i class="fas fa-arrow-right ms-1"></i>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+<div class="row mb-5 p-4 bg-light rounded-3 shadow-sm border">
+    <div class="col-lg-4 mb-4">
+        <h2 class="fw-bold text-dark">📅 Salon Doluluk Durumu</h2>
+        <p class="text-muted">Randevu yoğunluğuna göre antrenmanını planla.</p>
+
+        <div class="card border-0 bg-white shadow-sm mt-4">
+            <div class="card-body">
+                <h5 class="card-title fw-bold border-bottom pb-2">Renklerin Anlamı</h5>
+                <ul class="list-unstyled mt-3">
+                    <li class="mb-2 d-flex align-items-center">
+                        <span class="badge bg-danger me-2" style="width: 80px;">DOLU</span>
+                        <small class="text-muted">Randevular dolu (Kapasite %90+)</small>
+                    </li>
+                    <li class="mb-2 d-flex align-items-center">
+                        <span class="badge bg-warning text-dark me-2" style="width: 80px;">YOĞUN</span>
+                        <small class="text-muted">Orta seviye yoğunluk</small>
+                    </li>
+                    <li class="mb-2 d-flex align-items-center">
+                        <span class="badge bg-success me-2" style="width: 80px;">MÜSAİT</span>
+                        <small class="text-muted">Sakin, rahat antrenman</small>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="fw-bold m-0 text-uppercase text-primary" id="currentMonthYear">YÜKLENİYOR...</h4>
+            <div>
+                <button class="btn btn-sm btn-outline-secondary" id="prevMonthBtn"><i class="fas fa-chevron-left"></i></button>
+                <button class="btn btn-sm btn-outline-secondary" id="nextMonthBtn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+
+        <div class="calendar-container bg-white p-3 rounded shadow-sm">
+            <div class="calendar-weekdays mb-2 d-grid" style="grid-template-columns: repeat(7, 1fr); text-align: center; font-weight: bold; color: #6c757d;">
+                <div>Pzt</div><div>Sal</div><div>Çar</div><div>Per</div><div>Cum</div><div>Cmt</div><div>Paz</div>
+            </div>
+
+            <div class="calendar-days d-grid" id="calendarDays" style="grid-template-columns: repeat(7, 1fr); gap: 8px;">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container mb-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-uppercase"><i class="fas fa-tags text-primary"></i> 🏆 Üyelik Paketlerimiz</h2>
+        <p class="text-center text-muted mb-5">Sana uygun paketi seç, hemen yapay zeka destekli antrenmana başla.</p>
+    </div>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-warning text-center">
+            Henüz paket eklenmemiş. Lütfen <b>/Home/PaketleriDoldur</b> linkine giderek paketleri yükle.
+        </div>
+    }
+    else
+    {
+        <div class="row justify-content-center">
+            @foreach (var paket in Model)
+            {             
+                bool buPaketMevcut = (aktifPaketId.HasValue && aktifPaketId.Value == paket.PaketId);
+                
+                string borderClass = buPaketMevcut ? "border-success border-3 shadow-lg transform-scale" : "border-0 shadow-sm";
+                string headerColor = buPaketMevcut ? "bg-success text-white" : "bg-light text-dark";
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 @borderClass transition-hover" style="border-radius: 15px; overflow: hidden;">
+
+                        <div class="card-header @headerColor text-center py-3">
+                            @if (buPaketMevcut)
+                            {
+                                <small class="d-block mb-1"><i class="fas fa-check-circle"></i> MEVCUT PAKETİNİZ</small>
+                            }
+                            <h4 class="m-0 fw-bold text-uppercase">@paket.PaketAdi</h4>
+                        </div>
+
+                        <div class="card-body text-center d-flex flex-column">
+                            <h1 class="card-title fw-bold my-3 text-primary">
+                                @paket.Fiyat.ToString("N0") ₺
+                                <small class="text-muted fs-6">/ @paket.SureAy Ay</small>
+                            </h1>
+
+                            <hr />
+
+                            <ul class="list-unstyled text-start mx-auto mb-4 w-75">
+                                <li class="mb-3">
+                                    <i class="fas fa-calendar-check text-success me-2"></i>
+                                    Haftada <strong>@paket.HaftalikRandevuLimiti</strong> Randevu
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-robot text-info me-2"></i>
+                                    @(paket.SinirsizMi ? "Sınırsız" : paket.ToplamAiHakki.ToString()) Kez AI Analizi
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fas fa-dumbbell text-warning me-2"></i>
+                                    Kişiye Özel Antrenman
+                                </li>
+                                @if (paket.SinirsizMi)
+                                {
+                                    <li class="mb-3 fw-bold text-warning">
+                                        <i class="fas fa-crown me-2"></i> VIP Özel İlgi
+                                    </li>
+                                }
+                            </ul>
+
+                            <div class="mt-auto">
+                                @if (buPaketMevcut)
+                                {
+                                    <button class="btn btn-secondary w-100 py-2" disabled>
+                                        Zaten Bu Pakettesin
+                                    </button>
+                                }
+                                else
+                                {
+                                    <form asp-controller="Home" asp-action="PaketSec" method="post">
+                                        <input type="hidden" name="paketId" value="@paket.PaketId" />
+                                        <button type="submit" class="btn btn-outline-primary w-100 py-2 fw-bold">
+                                            <i class="fas fa-shopping-cart"></i> SATIN AL / GEÇİŞ YAP
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<div class="modal fade" id="paymentModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">📦 Paket Satın Al</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-light border text-center">
+                    Seçilen Paket: <strong id="modalPaketAdi" class="text-danger">-</strong> <br>
+                    Tutar: <strong id="modalFiyat" class="fs-4">-</strong> ₺
+                </div>
+
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Kart Üzerindeki İsim</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input type="text" class="form-control" placeholder="AD SOYAD">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Kart Numarası</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-credit-card"></i></span>
+                            <input type="text" class="form-control" placeholder="**** **** **** ****">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Son Kullanma</label>
+                            <input type="text" class="form-control" placeholder="AA/YY">
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label">CVV</label>
+                            <input type="text" class="form-control" placeholder="***">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                <button type="button" class="btn btn-success" onclick="completePayment()">Ödemeyi Tamamla</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/site.js"></script>

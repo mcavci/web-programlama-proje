@@ -1,0 +1,101 @@
+﻿@{
+    ViewData["Title"] = "Giriş Yap";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CAN Gym</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <link href="~/css/Hesap.css" rel="stylesheet" />
+</head>
+<body>
+
+    <a asp-controller="Home" asp-action="Index" class="position-absolute top-0 start-0 m-4 text-white text-decoration-none fw-bold fs-5" style="z-index: 999; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+        <i class="fas fa-arrow-left me-2"></i>Ana Sayfa
+    </a>
+    <div class="container fade-in-up">
+
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-5">
+
+                <div class="card register-card">
+                    <div class="card-header card-header-custom text-center">
+                        <h3 class="mb-0 fw-bold"><i class="fas fa-dumbbell me-2"></i>CAN Gym</h3>
+                        <p class="mb-0 opacity-75">Tekrar Hoşgeldiniz</p>
+                    </div>
+
+                    <div class="card-body p-4">
+
+                        @if (TempData["Mesaj"] != null)
+                        {
+                            <div class="alert alert-success alert-dismissible fade show mb-3 py-2 shadow-sm" role="alert">
+                                <small><i class="fas fa-check-circle me-1"></i> @TempData["Mesaj"]</small>
+                                <button type="button" class="btn-close small" data-bs-dismiss="alert"></button>
+                            </div>
+                        }
+
+                        @if (ViewBag.Hata != null)
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show mb-3 py-2 shadow-sm" role="alert">
+                                <small><i class="fas fa-exclamation-circle me-1"></i> @ViewBag.Hata</small>
+                                <button type="button" class="btn-close small" data-bs-dismiss="alert"></button>
+                            </div>
+                        }
+
+                        <h4 class="text-center text-primary mb-4 fw-bold">Giriş Yap</h4>
+
+                        <form asp-controller="Hesap" asp-action="Login" method="post">
+
+                            <div class="form-floating mb-3">
+                                <input type="email" name="email" class="form-control" placeholder="Email" required />
+                                <label><i class="fas fa-envelope me-2"></i>E-posta Adresi</label>
+                            </div>
+
+                            <div class="form-floating mb-4 position-relative">
+                                <input type="password" name="sifre" class="form-control" placeholder="Şifre" id="passwordInput" required />
+                                <label><i class="fas fa-lock me-2"></i>Şifre</label>
+                                <i class="fas fa-eye password-toggle" id="togglePassword" style="top: 18px;"></i>
+                            </div>
+
+                            <div class="d-grid gap-2 mb-3">
+                                <button type="submit" class="btn btn-primary btn-register text-white py-2 fs-5">
+                                    Giriş Yap <i class="fas fa-sign-in-alt ms-2"></i>
+                                </button>
+                            </div>
+
+                            <div class="text-center">
+                                <a href="/Admin/Login" class="text-muted small text-decoration-none">
+                                    <i class="fas fa-user-shield me-1"></i> Yönetici Girişi
+                                </a>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <div class="card-footer bg-light text-center py-3 border-0">
+                        <div>
+                            Hesabın yok mu?
+                            <a asp-controller="Hesap" asp-action="Register" class="text-primary fw-bold text-decoration-none">Hemen Kayıt Ol</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/js/Hesap.js"></script>
+</body>
+</html>

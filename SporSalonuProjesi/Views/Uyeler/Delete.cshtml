@@ -1,0 +1,111 @@
+﻿@model SporSalonuProjesi.Models.Uye
+
+@{
+    ViewData["Title"] = "Üye Sil";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow-lg border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-user-times me-2"></i> Üye Kaydını Sil
+                    </h3>
+                </div>
+                <div class="card-body p-4">
+
+                    <div class="alert alert-warning text-center border-warning" role="alert">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>Dikkat!</strong> <span class="fw-bold">@Model.Ad @Model.Soyad</span> isimli üyeyi silmek üzeresiniz. Bu işlem geri alınamaz!
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 border-end">
+                            <h5 class="text-danger border-bottom pb-2 mb-3">Kişisel Bilgiler</h5>
+
+                            <div class="mb-3">
+                                <label class="fw-bold text-muted small">Ad Soyad</label>
+                                <div class="fs-5 text-dark fw-bold">
+                                    <i class="fas fa-user text-danger me-2"></i> @Html.DisplayFor(model => model.Ad) @Html.DisplayFor(model => model.Soyad)
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="fw-bold text-muted small">E-Posta</label>
+                                <div class="text-dark">
+                                    <i class="fas fa-envelope text-danger me-2"></i> @Html.DisplayFor(model => model.Email)
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="fw-bold text-muted small">Telefon</label>
+                                <div class="text-dark">
+                                    <i class="fas fa-phone text-danger me-2"></i> @Html.DisplayFor(model => model.Telefon)
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="fw-bold text-muted small">Doğum Tarihi</label>
+                                <div class="text-dark">
+                                    <i class="fas fa-birthday-cake text-danger me-2"></i> @Html.DisplayFor(model => model.DogumTarihi)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 ps-md-4">
+                            <h5 class="text-danger border-bottom pb-2 mb-3">Fiziksel & Sistem Bilgileri</h5>
+
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <label class="fw-bold text-muted small">Boy</label>
+                                    <div class="fs-5"><i class="fas fa-ruler-vertical text-secondary me-1"></i> @Html.DisplayFor(model => model.Boy) cm</div>
+                                </div>
+                                <div class="col-6">
+                                    <label class="fw-bold text-muted small">Kilo</label>
+                                    <div class="fs-5"><i class="fas fa-weight text-secondary me-1"></i> @Html.DisplayFor(model => model.Kilo) kg</div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="fw-bold text-muted small">Atanan Eğitmen</label>
+                                <div class="text-dark">
+                                    <i class="fas fa-user-tie text-danger me-2"></i> @Html.DisplayFor(model => model.Egitmen.AdSoyad)
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="fw-bold text-muted small">Kayıt Tarihi</label>
+                                <div class="text-muted small">
+                                    <i class="far fa-calendar-alt me-1"></i> @Html.DisplayFor(model => model.KayitTarihi)
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="fw-bold text-muted small">Hesap Şifresi</label>
+                                <div class="text-muted small font-monospace bg-light p-1 rounded border d-inline-block">
+                                    @Html.DisplayFor(model => model.Sifre)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="UyeId" />
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-between align-items-center">
+                            <a asp-action="Index" class="btn btn-outline-secondary px-4">
+                                <i class="fas fa-arrow-left me-2"></i> İptal
+                            </a>
+                            <button type="submit" class="btn btn-danger px-5 fw-bold shadow-sm">
+                                <i class="fas fa-trash-alt me-2"></i> Üyeyi Sil
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,109 @@
+﻿@model SporSalonuProjesi.Models.Randevu
+
+@{
+    ViewData["Title"] = "Randevu Oluştur";
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<style>
+    .bg-ocean-gradient {
+        background: linear-gradient(45deg, #2193b0, #6dd5ed); 
+    }
+
+    .btn-ocean {
+        background: linear-gradient(45deg, #2193b0, #6dd5ed);
+        border: none;
+        color: white;
+        transition: all 0.3s ease;
+    }
+
+        .btn-ocean:hover {
+            background: linear-gradient(45deg, #6dd5ed, #2193b0); 
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(33, 147, 176, 0.4);
+        }
+
+    .text-ocean {
+        color: #2193b0;
+    }
+</style>
+</head>
+<body>
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+
+            <div asp-validation-summary="ModelOnly" class="alert alert-info shadow-sm border-0 text-dark"></div>
+
+            @if (ViewBag.Hata != null)
+            {
+                <div class="alert alert-warning shadow-sm text-center d-flex align-items-center justify-content-center border-0">
+                    <i class="fas fa-exclamation-triangle me-2"></i> @ViewBag.Hata
+                </div>
+            }
+
+            <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+
+                <div class="card-header bg-ocean-gradient text-white p-4 text-center">
+                    <h4 class="mb-0 fw-bold"><i class="fas fa-calendar-plus me-2"></i>Randevu Oluştur</h4>
+                    <p class="mb-0 small opacity-75">Antrenman zamanını planla</p>
+                </div>
+
+                <div class="card-body p-4 bg-white">
+                    <form asp-controller="Randevu" asp-action="Al" method="post">
+
+                        <div class="form-floating mb-3">
+                            <select asp-for="EgitmenId" class="form-select border-0 bg-light shadow-sm" id="drpEgitmen" asp-items="ViewBag.EgitmenListesi">
+                                <option value="">Seçiniz...</option>
+                            </select>
+                            <label for="drpEgitmen" class="text-ocean fw-bold"><i class="fas fa-user-tie me-1"></i>Eğitmen Seçin</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Tarih" type="date" class="form-control border-0 bg-light shadow-sm" id="dtpTarih"
+                                   min="@DateTime.Now.ToString("yyyy-MM-dd")"
+                                   value="@Model.Tarih.ToString("yyyy-MM-dd")" required />
+                            <label for="dtpTarih" class="text-ocean fw-bold"><i class="fas fa-calendar-alt me-1"></i>Tarih</label>
+                            <span asp-validation-for="Tarih" class="text-danger small ms-1"></span>
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <select asp-for="Saat" class="form-select border-0 bg-light shadow-sm" id="drpSaat" asp-items="ViewBag.MusaitSaatler" required>
+                                @if (ViewBag.MusaitSaatler == null)
+                                {
+                                    <option value="">Önce Eğitmen ve Tarih</option>
+                                }
+                            </select>
+                            <label for="drpSaat" class="text-ocean fw-bold"><i class="fas fa-clock me-1"></i>Saat</label>
+                            <span asp-validation-for="Saat" class="text-danger small ms-1"></span>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-ocean btn-lg shadow-sm fw-bold py-3 rounded-pill">
+                                <i class="fas fa-check-circle me-2"></i>Randevuyu Onayla
+                            </button>
+
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-light text-muted shadow-sm rounded-pill mt-2">
+                                Vazgeç
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/RandevuAl.js"></script>
+}

@@ -1,0 +1,132 @@
+﻿@model SporSalonuProjesi.Models.Uye
+
+@{
+    ViewData["Title"] = "Kayıt Ol";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CAN Gym</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <link href="~/css/Hesap.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="container fade-in-up">
+
+        @if (TempData["BasariliMesaj"] != null)
+        {
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-5">
+                    <div class="alert alert-success alert-dismissible fade show mb-4 shadow-sm" role="alert">
+                        <i class="fas fa-check-circle me-2"></i> <strong>Harika!</strong> @TempData["BasariliMesaj"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-5">
+
+                <div class="card register-card">
+                    <div class="card-header card-header-custom text-center">
+                        <h3 class="mb-0 fw-bold"><i class="fas fa-dumbbell me-2"></i>CAN Gym</h3>
+                        <p class="mb-0 opacity-75">Formunu Koru, Hayatına Güç Kat</p>
+                    </div>
+
+                    <div class="card-body p-4">
+                        <h4 class="text-center text-primary mb-4 fw-bold">Hesap Oluştur</h4>
+
+                        <form asp-controller="Hesap" asp-action="Register" method="post" id="registerForm">
+
+                            <div class="row g-2 mb-3">
+                                <div class="col-6">
+                                    <div class="form-floating">
+                                        <input asp-for="Ad" class="form-control" placeholder="Ad" required />
+                                        <label asp-for="Ad"><i class="fas fa-user me-1"></i> Ad</label>
+                                        <span asp-validation-for="Ad" class="text-danger small"></span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-floating">
+                                        <input asp-for="Soyad" class="form-control" placeholder="Soyad" required />
+                                        <label asp-for="Soyad"><i class="fas fa-user-tag me-1"></i> Soyad</label>
+                                        <span asp-validation-for="Soyad" class="text-danger small"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input asp-for="Email" class="form-control" type="email" placeholder="name@example.com" required />
+                                <label asp-for="Email"><i class="fas fa-envelope me-1"></i> Email</label>
+                                <span asp-validation-for="Email" class="text-danger small"></span>
+                            </div>
+
+                            <div class="form-floating mb-3 position-relative">
+                                <input asp-for="Sifre" class="form-control" type="password" placeholder="Şifre" id="passwordInput" required />
+                                <label asp-for="Sifre"><i class="fas fa-lock me-1"></i> Şifre</label>
+                                <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                                <span asp-validation-for="Sifre" class="text-danger small"></span>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input asp-for="Telefon" class="form-control" placeholder="(5XX)" />
+                                <label asp-for="Telefon"><i class="fas fa-phone me-1"></i> Telefon</label>
+                            </div>
+
+                            <div class="row g-2 mb-4">
+                                <div class="col-6">
+                                    <div class="form-floating">
+                                        <input asp-for="Boy" class="form-control" placeholder="Boy" />
+                                        <label asp-for="Boy"><i class="fas fa-ruler-vertical me-1"></i> Boy (cm)</label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-floating">
+                                        <input asp-for="Kilo" class="form-control" placeholder="Kilo" />
+                                        <label asp-for="Kilo"><i class="fas fa-weight me-1"></i> Kilo (kg)</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-register text-white py-2 fs-5">
+                                    Aramıza Katıl <i class="fas fa-arrow-right ms-2"></i>
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                    <div class="card-footer bg-light text-center py-3 border-0">
+                        <div>
+                            Zaten hesabın var mı?
+                            <a href="/Hesap/Login" class="text-primary fw-bold text-decoration-none">Giriş Yap</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="~/js/Hesap.js"></script>
+
+</body>
+</html>

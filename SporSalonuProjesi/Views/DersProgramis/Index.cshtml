@@ -1,0 +1,76 @@
+﻿@model IEnumerable<SporSalonuProjesi.Models.DersProgrami>
+
+@{
+    ViewData["Title"] = "Ders Programı";
+}
+
+<div class="container-fluid py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+        <h3 class="fw-bold text-dark mb-0">
+            <i class="fas fa-calendar-alt text-primary me-2"></i> Haftalık Program
+        </h3>
+        <a asp-action="Create" class="btn btn-primary rounded-pill px-4 shadow-sm">
+            <i class="fas fa-plus me-2"></i> Yeni Ders Ekle
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="py-3 ps-4">Gün</th>
+                            <th class="py-3">Ders Adı</th>
+                            <th class="py-3">Saat Aralığı</th>
+                            <th class="py-3">Eğitmen</th>
+                            <th class="py-3 text-end pe-4">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="ps-4">
+                                    <span class="badge bg-secondary rounded-pill px-3 py-2 fw-normal">
+                                        @item.Gun
+                                    </span>
+                                </td>
+                                <td class="fw-bold">@item.DersAdi</td>
+                                <td>
+                                    <i class="far fa-clock text-warning me-1"></i> @item.BaslangicSaati - @item.BitisSaati
+                                </td>
+                                <td>
+                                    @if (item.Egitmen != null)
+                                    {
+                                        <span>@item.Egitmen.AdSoyad</span>
+                                    }
+                                    else
+                                    {
+
+                                        <span>-</span>
+                                    }
+                                </td>
+
+                                <td class="text-end pe-4">
+                                    <div class="btn-group" role="group">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning" title="Düzenle">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info" title="Detay">
+                                            <i class="fas fa-info-circle"></i>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger" title="Sil">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

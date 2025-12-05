@@ -1,0 +1,216 @@
+﻿@using Microsoft.AspNetCore.Http
+@using System.Text.Json
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    // --- SESSION KONTROLÜ ---
+    string gosterilecekIsim = "";
+    bool girisYapmisMi = false;
+
+    var jsonVerisi = HttpContextAccessor?.HttpContext?.Session.GetString("AktifKullanici");
+
+    if (!string.IsNullOrEmpty(jsonVerisi))
+    {
+        try
+        {
+            var uye = JsonSerializer.Deserialize<SporSalonuProjesi.Models.Uye>(jsonVerisi);
+            if (uye != null)
+            {
+                gosterilecekIsim = uye.Ad + " " + uye.Soyad;
+                girisYapmisMi = true;
+            }
+        }
+        catch
+        {
+            girisYapmisMi = false;
+        }
+    }
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CAN Gym</title>
+
+    
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+   
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+ <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm py-3 sticky-top" style="z-index: 1000;">
+            <div class="container-fluid px-4">
+
+                <a class="navbar-brand fw-bold fs-3 d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-dumbbell text-primary me-2"></i>
+                    CAN<span class="text-dark">GYM</span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-3 ms-4">
+                        <li class="nav-item"><a class="nav-link fw-medium" asp-controller="Home" asp-action="Index">Anasayfa</a></li>
+                        <li class="nav-item"><a class="nav-link fw-medium" asp-controller="Egitmen" asp-action="Hoca">Eğitmenler</a></li>
+                        <li class="nav-item"><a class="nav-link fw-medium" asp-controller="Saglik" asp-action="Index">AI Analiz</a></li>
+                    </ul>
+
+                    <ul class="navbar-nav ms-auto align-items-center gap-3">
+                        <li class="nav-item border-end pe-3">
+                            <button id="darkModeToggle" class="btn btn-light rounded-circle border shadow-sm" style="width: 40px; height: 40px;">
+                                <i class="fas fa-moon text-secondary"></i>
+                            </button>
+                        </li>
+
+                        @if (girisYapmisMi)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle d-flex align-items-center gap-2 p-0 remove-arrow" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <div class="text-end d-none d-md-block line-height-sm">
+                                        <span class="d-block fw-bold text-dark small">@gosterilecekIsim</span>
+                                        <span class="d-block text-primary x-small">Üye Paneli</span>
+                                    </div>
+                                    <div class="position-relative">
+                                        <img src="~/img/layout.png" class="rounded-circle shadow-sm border border-2 border-white">
+                                        <span class="position-absolute bottom-0 end-0 bg-success border border-white rounded-circle" style="width: 12px; height: 12px;"></span>
+                                    </div>
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-menu-end user-menu-card p-0 mt-3" aria-labelledby="userMenu">
+
+                                    <li class="p-3 border-bottom bg-light rounded-top">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-shrink-0">
+                                                <div class="avatar-circle bg-primary text-white fw-bold d-flex justify-content-center align-items-center">
+                                                    @gosterilecekIsim.Substring(0, 1)
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6 class="mb-0 fw-bold text-dark">@gosterilecekIsim</h6>
+                                                <small class="text-muted">Aktif Üyelik</small>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="p-2">
+                                        <div class="row g-2">
+                                            <div class="col-6">
+                                                <a class="dropdown-item menu-tile rounded" asp-controller="Hesap" asp-action="Profil">
+                                                    <i class="fas fa-id-card mb-2 text-primary"></i>
+                                                    <span>Profil</span>
+                                                </a>
+                                            </div>
+                                            <div class="col-6">
+                                                <a class="dropdown-item menu-tile rounded" asp-controller="Randevu" asp-action="Index">
+                                                    <i class="fas fa-calendar-check mb-2 text-warning"></i>
+                                                    <span>Randevular</span>
+                                                </a>
+                                            </div>
+                                            <div class="col-6">
+                                                <a class="dropdown-item menu-tile rounded" asp-controller="Randevu" asp-action="Al">
+                                                    <i class="fas fa-plus-circle mb-2 text-success"></i>
+                                                    <span>Randevu Al</span>
+                                                </a>
+                                            </div>
+                                            <div class="col-6">
+                                                <a class="dropdown-item menu-tile rounded" href="/#paymentModal">
+                                                    <i class="fas fa-wallet mb-2 text-info"></i>
+                                                    <span>Paket Al</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="p-2 border-top bg-light rounded-bottom">
+                                        <a class="dropdown-item text-danger fw-bold rounded d-flex justify-content-between align-items-center py-2" asp-controller="Hesap" asp-action="Logout">
+                                            <span>Çıkış Yap</span>
+                                            <i class="fas fa-sign-out-alt"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link fw-bold text-dark me-2" asp-controller="Hesap" asp-action="Login">Giriş Yap</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-primary rounded-pill px-4 shadow-sm fw-bold" asp-controller="Hesap" asp-action="Register">Kayıt Ol</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+ </header>
+
+    <div class="container mb-5 mt-4">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="text-white pt-5 mt-auto" style="background-color: #0b1120; border-top: 4px solid #CC0000;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h3 class="fw-bold mb-3"><span style="color:#CC0000">CAN</span> GYM</h3>
+                    <p class="text-muted small" style="line-height: 1.8;">
+                        Şehrin en donanımlı spor salonu. Hedeflerine ulaşman için buradayız.
+                    </p>
+                    <div class="mt-3">
+                        <a href="#" class="social-btn text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-btn text-white me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-btn text-white"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold mb-4 text-uppercase text-white border-start border-3 border-danger ps-3">Hızlı Erişim</h5>
+                    <ul class="list-unstyled ps-0">
+                        <li class="mb-3"><a href="/Home/Index" class="footer-link d-flex align-items-center"><i class="fas fa-chevron-right me-2 small text-danger"></i> Ana Sayfa</a></li>
+                        <li class="mb-3"><a href="/Saglik/Index" class="footer-link d-flex align-items-center"><i class="fas fa-chevron-right me-2 small text-danger"></i> AI Vücut Analizi</a></li>
+                        <li class="mb-3"><a href="/Egitmen/Hoca" class="footer-link d-flex align-items-center"><i class="fas fa-chevron-right me-2 small text-danger"></i> Eğitmenler</a></li>
+                        <li class="mb-3"><a href="/Iletisim/Index" class="footer-link d-flex align-items-center"><i class="fas fa-chevron-right me-2 small text-danger"></i> İletişim</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <h5 class="fw-bold mb-4 text-uppercase text-white border-start border-3 border-danger ps-3">Çalışma Saatleri</h5>
+                    <ul class="list-unstyled text-muted small">
+                        <li class="d-flex justify-content-between mb-2 border-bottom border-secondary pb-1">
+                            <span>Hafta İçi:</span> <span class="text-white">09:00 - 20:00</span>
+                        </li>
+                        <li class="d-flex justify-content-between mb-2 border-bottom border-secondary pb-1">
+                            <span>Cumartesi:</span> <span class="text-white">09:00 - 21:00</span>
+                        </li>
+                        <li class="d-flex justify-content-between mb-2">
+                            <span>Pazar:</span> <span class="text-danger fw-bold">Kapalı</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr style="background-color: #444; opacity: 0.5;">
+            <div class="text-center small text-muted py-3">
+                &copy; 2025 CAN Gym. Tüm hakları saklıdır.
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

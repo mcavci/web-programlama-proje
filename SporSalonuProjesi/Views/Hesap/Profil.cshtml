@@ -1,0 +1,182 @@
+﻿@using SporSalonuProjesi.Models
+@model Uye
+
+@{
+    ViewData["Title"] = "Profilim";
+
+
+    double boyM = Model.Boy / 100.0;
+    double vki = 0;
+    string vkiDurum = "";
+    string vkiRenk = "";
+
+    if (boyM > 0)
+    {
+        vki = Math.Round(Model.Kilo / (boyM * boyM), 2);
+
+        // VKİ Durum Analizi
+        if (vki < 18.5) { vkiDurum = "Zayıf"; vkiRenk = "text-info"; }
+        else if (vki < 25) { vkiDurum = "İdeal"; vkiRenk = "text-success"; }
+        else if (vki < 30) { vkiDurum = "Fazla Kilolu"; vkiRenk = "text-warning"; }
+        else { vkiDurum = "Obez"; vkiRenk = "text-danger"; }
+    }
+
+    var randevuListesi = ViewBag.Randevular as List<Randevu>;
+}
+
+<link href="~/css/profil.css" rel="stylesheet" />
+
+<div class="container py-5 mt-5">
+    <div class="row g-5">
+
+        <div class="col-lg-4">
+            <div class="card custom-card h-100">
+                <div class="profile-header-bg"></div>
+
+                <div class="card-body pt-0">
+                    <div class="avatar-container mb-4">
+                        <img src="https://ui-avatars.com/api/?name=@Model.Ad+@Model.Soyad&background=0072ff&color=fff&size=128&font-size=0.35" class="rounded-circle avatar-img">
+                        <h3 class="mt-3 fw-bold text-dark">@Model.Ad @Model.Soyad</h3>
+                        <p class="text-muted mb-0"><i class="fas fa-envelope me-1 small"></i> @Model.Email</p>
+                    </div>
+
+                    <div class="row text-center g-3 mb-4">
+                        <div class="col-6">
+                            <div class="stat-card p-3">
+                                <small class="text-muted d-block text-uppercase fw-bold" style="font-size: 0.75rem;">Boy</small>
+                                <span class="h4 fw-bold text-dark mb-0">@Model.Boy</span> <small>cm</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="stat-card p-3">
+                                <small class="text-muted d-block text-uppercase fw-bold" style="font-size: 0.75rem;">Kilo</small>
+                                <span class="h4 fw-bold text-dark mb-0">@Model.Kilo</span> <small>kg</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-light border d-flex align-items-center justify-content-between p-3" role="alert">
+                        <div>
+                            <span class="d-block text-muted small">Vücut Kitle İndeksi</span>
+                            <span class="h5 fw-bold mb-0 @vkiRenk">@vki</span>
+                        </div>
+                        <span class="badge bg-light border text-dark">@vkiDurum</span>
+                    </div>
+
+                    <hr class="my-4 opacity-10">
+
+                    <div class="d-grid gap-2">
+                        <a asp-controller="Hesap" asp-action="Logout" class="btn btn-outline-danger py-2 rounded-pill">
+                            <i class="fas fa-sign-out-alt me-2"></i> Güvenli Çıkış
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <div class="card custom-card h-100 p-3">
+
+                <div class="d-flex justify-content-between align-items-center mb-3 px-2">
+                    <div>
+                        <h4 class="fw-bold text-dark mb-1">Randevularım</h4>
+                        <p class="text-muted small mb-0">Antrenman takviminizi buradan yönetin.</p>
+                    </div>
+                    <a href="/Randevu/Al" class="btn btn-primary rounded-pill px-4 shadow-sm btn-sm">
+                        <i class="fas fa-plus me-2"></i> Yeni Ekle
+                    </a>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-custom mb-0">
+                        <thead>
+                            <tr>
+                                <th>Eğitmen</th>
+                                <th>Tarih & Saat</th>
+                                <th>Durum</th>
+                                <th>İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (randevuListesi != null && randevuListesi.Count > 0)
+                            {
+                                @foreach (var r in randevuListesi.OrderByDescending(x => x.Tarih))
+                                {
+                                    bool gecmisMi = r.Tarih < DateTime.Now;
+
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="instructor-icon shadow-sm">
+                                                    <i class="fas fa-dumbbell"></i>
+                                                </div>
+                                                <div>
+                                                    <span class="d-block fw-bold text-dark">@r.EgitmenAdi</span>
+                                                    <small class="text-muted" style="font-size: 0.75rem;">Personal Trainer</small>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="d-flex flex-column">
+                                                <span class="fw-bold text-dark">@r.Tarih.ToString("dd MMMM yyyy")</span>
+                                                <small class="text-muted"><i class="far fa-clock me-1"></i>@r.Saat</small>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            @if (gecmisMi)
+                                            {
+                                                <span class="status-completed">
+                                                    <i class="fas fa-check-circle me-1"></i> Tamamlandı
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span class="status-active">
+                                                    Aktif
+                                                </span>
+                                            }
+                                        </td>
+
+                                        <td>
+                                            @if (!gecmisMi)
+                                            {
+                                                <button class="btn-cancel shadow-sm" title="Randevuyu İptal Et" data-bs-toggle="tooltip">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted small ms-2">-</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="4" class="text-center py-5">
+                                        <div class="opacity-50 mb-3 text-primary">
+                                            <i class="fas fa-calendar-day fa-3x"></i>
+                                        </div>
+                                        <h6 class="fw-bold text-dark">Planlanmış antrenman yok</h6>
+                                        <p class="text-muted small">Kendine bir iyilik yap ve hemen randevu al.</p>
+                                        <a href="/Randevu/Al" class="btn btn-outline-primary btn-sm rounded-pill mt-2">Randevu Al</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/Hesap.js"></script>
+}

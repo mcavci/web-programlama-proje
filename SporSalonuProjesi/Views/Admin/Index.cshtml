@@ -1,0 +1,207 @@
+﻿@model List<SporSalonuProjesi.Models.Randevu>
+
+@{
+    ViewData["Title"] = "Yönetim Paneli";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="container-fluid p-4 fade-ac">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary"><i class="fas fa-chart-line"></i> Dashboard</h2>
+        <span class="text-muted">Hoşgeldin, Yönetici</span>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2 news-card">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Toplam Üye</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.ToplamUye</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2 news-card">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Onay Bekleyen</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.BekleyenRandevu</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clock fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2 news-card">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Eğitmenler</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.ToplamEgitmen</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dumbbell fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2 news-card">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Aktif Paketler</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.ToplamPaket</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-box-open fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2 news-card">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Toplam Randevu </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.ToplamRandevu</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-box-open fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+
+        <div class="col-lg-8 mb-4">
+            <div class="card shadow mb-4 news-card">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Aylık Tahmini Kazanç</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="kazancChart" style="max-height: 300px;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+            <div class="card shadow mb-4 news-card">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-info">Eğitmen Popülerliği</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-pie pt-4 pb-2">
+                        <canvas id="hocaChart" style="max-height: 250px;"></canvas>
+                    </div>
+                    <div class="mt-4 text-center small text-muted">
+                        *Randevu sayılarına göre dağılım
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4 news-card">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-danger">Onay Bekleyen Randevular</h6>
+            <a href="/Admin/TumRandevular" class="btn btn-sm btn-secondary">Tümünü Gör</a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered" width="100%" cellspacing="0">
+                    <thead class="bg-light text-dark">
+                        <tr>
+                            <th>Üye Adı</th>
+                            <th>Eğitmen</th>
+                            <th>Tarih & Saat</th>
+                            <th>Durum</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Count > 0)
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <i class="fas fa-user text-muted"></i>
+                                        @item.UyeAdSoyad
+                                    </td>
+                                    <td>@item.EgitmenAdi</td>
+                                    <td>
+                                        <span class="badge bg-light text-dark border">
+                                            @(((DateTime)item.Tarih).ToString("dd.MM.yyyy"))
+                                        </span>
+                                        <span class="badge bg-light text-dark border">
+                                            @item.Saat
+                                        </span>
+                                    </td>
+                                    <td><span class="badge bg-warning text-dark">@item.Durum</span></td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a href="/Admin/RandevuOnayla/@item.Id" class="btn btn-success btn-sm" title="Onayla">
+                                                <i class="fas fa-check"></i> Onayla
+                                            </a>
+                                            <a href="/Admin/RandevuSil/@item.Id" class="btn btn-danger btn-sm" onclick="return confirm('Bu randevuyu silmek istediğine emin misin?');" title="Sil">
+                                                <i class="fas fa-trash"></i> Sil
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">
+                                    <i class="fas fa-check-circle fa-3x mb-3 text-success"></i><br />
+                                    Harika! Onay bekleyen randevu yok.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+   
+    window.adminVerileri = {
+        aylar: @Html.Raw(Json.Serialize(ViewBag.Aylar)),
+        kazancData: @Html.Raw(Json.Serialize(ViewBag.KazancVerileri)),
+        hocaIsim: @Html.Raw(Json.Serialize(ViewBag.HocaIsimleri)),
+        hocaSayi: @Html.Raw(Json.Serialize(ViewBag.HocaSayilari))
+    };
+</script>
+
+<script src="/js/site.js"></script>
